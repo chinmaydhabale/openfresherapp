@@ -1,37 +1,42 @@
 const CURRENT_VERSION = '1.0.0';
-const VERSION_CHECK_URL = 'https://www.openfresher.com/app_version.json';
+const VERSION_CHECK_URLS = [
+  'https://raw.githubusercontent.com/chinmaydhabale/openfresherapp/main/live_update.json',
+  'https://www.openfresher.com/app_version.json'
+];
 
 export const appUpdateService = {
   CURRENT_VERSION,
 
   /**
-   * Checks remote version JSON on openfresher.com to determine if a newer version exists.
+   * Checks remote version JSON on GitHub / openfresher.com to determine if a newer version exists.
    */
   async checkForUpdates() {
-    try {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 4000);
+    for (const url of VERSION_CHECK_URLS) {
+      try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 4000);
 
-      const response = await fetch(VERSION_CHECK_URL, {
-        signal: controller.signal,
-        headers: { 'Cache-Control': 'no-cache' }
-      });
-      clearTimeout(timeoutId);
+        const response = await fetch(url, {
+          signal: controller.signal,
+          headers: { 'Cache-Control': 'no-cache' }
+        });
+        clearTimeout(timeoutId);
 
-      if (response.ok) {
-        const data = await response.json();
-        if (data && data.version && this.isVersionHigher(data.version, CURRENT_VERSION)) {
-          return {
-            hasUpdate: true,
-            latestVersion: data.version,
-            apkUrl: data.apkUrl || 'https://www.openfresher.com',
-            releaseNotes: data.releaseNotes || 'New features, performance improvements, and bug fixes.',
-            forceUpdate: !!data.forceUpdate
-          };
+        if (response.ok) {
+          const data = await response.json();
+          if (data && data.version && this.isVersionHigher(data.version, CURRENT_VERSION)) {
+            return {
+              hasUpdate: true,
+              latestVersion: data.version,
+              apkUrl: data.apkUrl || 'https://www.openfresher.com',
+              releaseNotes: data.releaseNotes || 'New features, performance improvements, and bug fixes.',
+              forceUpdate: !!data.forceUpdate
+            };
+          }
         }
+      } catch (err) {
+        console.log('[UpdateService] Check skipped for:', url);
       }
-    } catch (err) {
-      console.log('[UpdateService] Offline or no app_version.json on server:', err.message);
     }
 
     return { hasUpdate: false };
