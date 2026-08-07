@@ -1,0 +1,305 @@
+@import "tailwindcss";
+
+:root {
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --bg-main: #0b0f19;
+  --bg-card: #151c2c;
+  --border-color: rgba(255, 255, 255, 0.08);
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-main);
+  color: #f1f5f9;
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+#root {
+  min-height: 100%;
+}
+
+/* ============================================ */
+/* Custom Glassmorphism                         */
+/* ============================================ */
+.glass-header {
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.glass-card {
+  background: rgba(21, 28, 44, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+}
+
+.glass-nav {
+  background: rgba(15, 23, 42, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid var(--border-color);
+}
+
+/* ============================================ */
+/* Scrollbar & Overflow Helpers                 */
+/* ============================================ */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 9999px;
+}
+
+/* Force touch scrolling on Android WebView */
+.scroll-container {
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+  overscroll-behavior-y: contain;
+}
+
+/* ============================================ */
+/* Line Clamp Utilities                         */
+/* ============================================ */
+.line-clamp-1 {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ============================================ */
+/* Blog Post Native Content Styling             */
+/* Forces dark theme over Blogger inline styles */
+/* ============================================ */
+.native-post-content {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: #e2e8f0 !important;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.native-post-content * {
+  color: #e2e8f0 !important;
+  background-color: transparent !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  font-family: var(--font-sans) !important;
+  max-width: 100% !important;
+}
+
+.native-post-content p {
+  margin-bottom: 1.15rem;
+  line-height: 1.8;
+}
+
+.native-post-content h1,
+.native-post-content h2,
+.native-post-content h3,
+.native-post-content h4,
+.native-post-content h5,
+.native-post-content h6 {
+  color: #ffffff !important;
+  font-weight: 700;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  line-height: 1.35;
+}
+
+.native-post-content h2 {
+  font-size: 1.3rem;
+  border-left: 4px solid #3b82f6;
+  padding-left: 0.75rem;
+}
+
+.native-post-content h3 {
+  font-size: 1.15rem;
+  color: #38bdf8 !important;
+}
+
+.native-post-content h4 {
+  font-size: 1.05rem;
+  color: #67e8f9 !important;
+}
+
+.native-post-content img {
+  max-width: 100% !important;
+  height: auto !important;
+  border-radius: 12px;
+  margin: 1rem auto;
+  display: block;
+  box-shadow: 0 8px 20px -5px rgba(0, 0, 0, 0.4);
+}
+
+.native-post-content a {
+  color: #60a5fa !important;
+  text-decoration: underline;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.native-post-content a:active {
+  color: #93c5fd !important;
+}
+
+.native-post-content ul,
+.native-post-content ol {
+  margin-left: 1.25rem;
+  margin-bottom: 1.25rem;
+  padding-left: 0.5rem;
+}
+
+.native-post-content ul {
+  list-style-type: disc;
+}
+
+.native-post-content ol {
+  list-style-type: decimal;
+}
+
+.native-post-content li {
+  margin-bottom: 0.5rem;
+  line-height: 1.7;
+}
+
+.native-post-content blockquote {
+  border-left: 4px solid #8b5cf6;
+  background: rgba(139, 92, 246, 0.08) !important;
+  padding: 1rem 1.25rem;
+  border-radius: 0 12px 12px 0;
+  margin: 1.25rem 0;
+  font-style: italic;
+}
+
+.native-post-content blockquote * {
+  color: #cbd5e1 !important;
+}
+
+.native-post-content table {
+  width: 100% !important;
+  border-collapse: collapse;
+  margin: 1.25rem 0;
+  font-size: 0.9rem;
+  display: block;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.native-post-content th {
+  background: rgba(30, 41, 59, 0.8) !important;
+  color: #38bdf8 !important;
+  font-weight: 700;
+  padding: 0.7rem 0.85rem;
+  text-align: left;
+}
+
+.native-post-content td {
+  background: rgba(15, 23, 42, 0.5) !important;
+  padding: 0.7rem 0.85rem;
+  text-align: left;
+}
+
+.native-post-content th,
+.native-post-content td {
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Force strong/bold text to white for readability */
+.native-post-content strong,
+.native-post-content b {
+  color: #ffffff !important;
+  font-weight: 700;
+}
+
+/* Style separator/hr lines */
+.native-post-content hr {
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin: 1.5rem 0;
+}
+
+/* Override any Blogger div containers with colored backgrounds */
+.native-post-content div {
+  background-color: transparent !important;
+}
+
+/* Hide Blogger separator/clear divs but keep images */
+.native-post-content .separator {
+  text-align: center;
+  margin: 1rem 0;
+}
+
+/* Code blocks */
+.native-post-content pre,
+.native-post-content code {
+  background: rgba(30, 41, 59, 0.6) !important;
+  color: #e2e8f0 !important;
+  border-radius: 8px;
+  padding: 0.15rem 0.4rem;
+  font-size: 0.9em;
+}
+
+.native-post-content pre {
+  padding: 1rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ============================================ */
+/* Shimmer Loader                               */
+/* ============================================ */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.animate-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.03) 25%,
+    rgba(255, 255, 255, 0.08) 50%,
+    rgba(255, 255, 255, 0.03) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
