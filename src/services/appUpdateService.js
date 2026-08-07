@@ -16,9 +16,10 @@ export const appUpdateService = {
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 4000);
 
-        const response = await fetch(url, {
+        const cacheBustUrl = url.includes('?') ? `${url}&t=${Date.now()}` : `${url}?t=${Date.now()}`;
+        const response = await fetch(cacheBustUrl, {
           signal: controller.signal,
-          headers: { 'Cache-Control': 'no-cache' }
+          headers: { 'Cache-Control': 'no-cache, no-store, must-revalidate' }
         });
         clearTimeout(timeoutId);
 
