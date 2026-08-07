@@ -1,6 +1,6 @@
 {
   "version": "1.0.1",
-  "apkUrl": "https://raw.githubusercontent.com/chinmaydhabale/openfresherapp/main/dist_v1.0.0.zip",
-  "releaseNotes": "🎉 OpenFresher Update v1.0.1 Live! New job alerts, faster loading speed, and UI improvements.",
+  "apkUrl": "https://raw.githubusercontent.com/chinmaydhabale/openfresherapp/main/openfresher-v1.0.1.apk",
+  "releaseNotes": "🎉 OpenFresher Update v1.0.1 Live! Official leaf logo, featured slider improvements, and speed optimizations.",
   "forceUpdate": false
 }
