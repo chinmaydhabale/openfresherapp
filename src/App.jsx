@@ -14,6 +14,7 @@ import { PullToRefresh } from './components/PullToRefresh';
 import { Loader2, AlertCircle, Layers } from 'lucide-react';
 
 import { liveOtaService } from './services/liveOtaService';
+import { notificationService } from './services/notificationService';
 
 export function App() {
   const [posts, setPosts] = useState([]);
@@ -34,7 +35,10 @@ export function App() {
     // 1. Silent Live OTA Updater Initialization
     liveOtaService.init();
 
-    // 2. In-App APK update check
+    // 2. Request Notification Permission
+    notificationService.requestPermission();
+
+    // 3. In-App APK update check
     appUpdateService.checkForUpdates().then((info) => {
       if (info && info.hasUpdate) {
         setUpdateInfo(info);
@@ -60,6 +64,8 @@ export function App() {
       setError(result.error);
     } else {
       setPosts(result.posts);
+      // Check for new job posts and trigger native notification
+      notificationService.checkAndNotifyNewJobs(result.posts);
     }
 
     setLoading(false);
