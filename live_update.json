@@ -1,6 +1,6 @@
 {
-  "version": "1.0.2",
+  "version": "1.0.0",
   "apkUrl": "https://raw.githubusercontent.com/chinmaydhabale/openfresherapp/main/openfresher-v1.0.2.apk",
-  "releaseNotes": "🔄 Pull-To-Refresh feature added! Pull down on home feed to instantly load fresh job alerts.",
+  "releaseNotes": "No update active.",
   "forceUpdate": false
 }
