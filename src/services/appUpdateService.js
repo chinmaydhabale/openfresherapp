@@ -1,4 +1,4 @@
-const CURRENT_VERSION = '1.0.1';
+const CURRENT_VERSION = '1.0.3';
 const VERSION_CHECK_URLS = [
   'https://raw.githubusercontent.com/chinmaydhabale/openfresherapp/main/live_update.json',
   'https://www.openfresher.com/app_version.json'

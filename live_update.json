@@ -1,6 +1,6 @@
 {
-  "version": "1.0.0",
-  "apkUrl": "https://raw.githubusercontent.com/chinmaydhabale/openfresherapp/main/openfresher-v1.0.2.apk",
-  "releaseNotes": "No update active.",
+  "version": "1.0.3",
+  "apkUrl": "https://raw.githubusercontent.com/chinmaydhabale/openfresherapp/main/openfresher-v1.0.3.apk",
+  "releaseNotes": "🔔 Native Job Alert Notifications & Pull-To-Refresh features added! Upgrade now.",
   "forceUpdate": false
 }
