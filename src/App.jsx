@@ -10,6 +10,7 @@ import { BookmarksView } from './components/BookmarksView';
 import { BottomNav } from './components/BottomNav';
 import { FeaturedSlider } from './components/FeaturedSlider';
 import { UpdateModal } from './components/UpdateModal';
+import { PullToRefresh } from './components/PullToRefresh';
 import { Loader2, AlertCircle, Layers } from 'lucide-react';
 
 import { liveOtaService } from './services/liveOtaService';
@@ -93,76 +94,81 @@ export function App() {
         />
       )}
 
-      {/* Main Content */}
+      {/* Main Content with Pull-To-Refresh */}
       {activeTab === 'home' && (
-        <div style={{ padding: '16px', maxWidth: '480px', margin: '0 auto' }}>
-          {/* Loading Skeleton */}
-          {loading && (
-            <div className="space-y-4">
-              <div className="h-44 rounded-2xl animate-shimmer" style={{ border: '1px solid rgba(255,255,255,0.05)' }} />
-              <div className="h-28 rounded-2xl animate-shimmer" style={{ border: '1px solid rgba(255,255,255,0.05)' }} />
-              <div className="h-28 rounded-2xl animate-shimmer" style={{ border: '1px solid rgba(255,255,255,0.05)' }} />
-            </div>
-          )}
-
-          {/* Error View */}
-          {!loading && error && (
-            <div style={{ padding: '48px 16px', textAlign: 'center' }} className="glass-card rounded-2xl">
-              <AlertCircle style={{ width: 40, height: 40, color: '#fb7185', margin: '0 auto 12px' }} />
-              <h3 style={{ fontSize: '16px', fontWeight: 700, color: '#fff', marginBottom: 4 }}>Unable to fetch job alerts</h3>
-              <p style={{ fontSize: '12px', color: '#94a3b8', marginBottom: 16 }}>{error}</p>
-              <button
-                onClick={() => loadPosts(activeCategory)}
-                style={{
-                  padding: '10px 20px', borderRadius: '12px', border: 'none',
-                  background: 'linear-gradient(135deg, #2563eb, #06b6d4)',
-                  color: '#fff', fontWeight: 700, fontSize: '13px', cursor: 'pointer'
-                }}
-              >
-                Retry Connection
-              </button>
-            </div>
-          )}
-
-          {/* Empty State */}
-          {!loading && !error && posts.length === 0 && (
-            <div style={{ padding: '64px 16px', textAlign: 'center', color: '#94a3b8' }}>
-              <Layers style={{ width: 40, height: 40, margin: '0 auto 8px', color: '#475569' }} />
-              <p style={{ fontSize: '14px', fontWeight: 600 }}>No posts found in "{activeCategory}"</p>
-            </div>
-          )}
-
-          {/* Featured Posts Slider / Single Section */}
-          {!loading && !error && (
-            <FeaturedSlider
-              posts={posts}
-              onSelectPost={setSelectedPost}
-            />
-          )}
-
-          {/* All Job Alerts Feed */}
-          {!loading && !error && posts.length > 0 && (
-            <div>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px', paddingTop: '4px' }}>
-                <h3 style={{ fontSize: '12px', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                  Recent Job Alerts ({posts.length})
-                </h3>
+        <PullToRefresh
+          onRefresh={() => loadPosts(activeCategory, true)}
+          isRefreshing={refreshing}
+        >
+          <div style={{ padding: '16px', maxWidth: '480px', margin: '0 auto' }}>
+            {/* Loading Skeleton */}
+            {loading && (
+              <div className="space-y-4">
+                <div className="h-44 rounded-2xl animate-shimmer" style={{ border: '1px solid rgba(255,255,255,0.05)' }} />
+                <div className="h-28 rounded-2xl animate-shimmer" style={{ border: '1px solid rgba(255,255,255,0.05)' }} />
+                <div className="h-28 rounded-2xl animate-shimmer" style={{ border: '1px solid rgba(255,255,255,0.05)' }} />
               </div>
+            )}
 
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                {posts.map((post) => (
-                  <JobCard
-                    key={post.id}
-                    post={post}
-                    onSelectPost={setSelectedPost}
-                    isBookmarked={isBookmarked(post.id)}
-                    onToggleBookmark={handleToggleBookmark}
-                  />
-                ))}
+            {/* Error View */}
+            {!loading && error && (
+              <div style={{ padding: '48px 16px', textAlign: 'center' }} className="glass-card rounded-2xl">
+                <AlertCircle style={{ width: 40, height: 40, color: '#fb7185', margin: '0 auto 12px' }} />
+                <h3 style={{ fontSize: '16px', fontWeight: 700, color: '#fff', marginBottom: 4 }}>Unable to fetch job alerts</h3>
+                <p style={{ fontSize: '12px', color: '#94a3b8', marginBottom: 16 }}>{error}</p>
+                <button
+                  onClick={() => loadPosts(activeCategory)}
+                  style={{
+                    padding: '10px 20px', borderRadius: '12px', border: 'none',
+                    background: 'linear-gradient(135deg, #2563eb, #06b6d4)',
+                    color: '#fff', fontWeight: 700, fontSize: '13px', cursor: 'pointer'
+                  }}
+                >
+                  Retry Connection
+                </button>
               </div>
-            </div>
-          )}
-        </div>
+            )}
+
+            {/* Empty State */}
+            {!loading && !error && posts.length === 0 && (
+              <div style={{ padding: '64px 16px', textAlign: 'center', color: '#94a3b8' }}>
+                <Layers style={{ width: 40, height: 40, margin: '0 auto 8px', color: '#475569' }} />
+                <p style={{ fontSize: '14px', fontWeight: 600 }}>No posts found in "{activeCategory}"</p>
+              </div>
+            )}
+
+            {/* Featured Posts Slider / Single Section */}
+            {!loading && !error && (
+              <FeaturedSlider
+                posts={posts}
+                onSelectPost={setSelectedPost}
+              />
+            )}
+
+            {/* All Job Alerts Feed */}
+            {!loading && !error && posts.length > 0 && (
+              <div>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px', paddingTop: '4px' }}>
+                  <h3 style={{ fontSize: '12px', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                    Recent Job Alerts ({posts.length})
+                  </h3>
+                </div>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                  {posts.map((post) => (
+                    <JobCard
+                      key={post.id}
+                      post={post}
+                      onSelectPost={setSelectedPost}
+                      isBookmarked={isBookmarked(post.id)}
+                      onToggleBookmark={handleToggleBookmark}
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </PullToRefresh>
       )}
 
       {/* Categories Tab */}
