@@ -15,6 +15,7 @@ import { Loader2, AlertCircle, Layers } from 'lucide-react';
 
 import { liveOtaService } from './services/liveOtaService';
 import { notificationService } from './services/notificationService';
+import { fcmPushService } from './services/fcmPushService';
 
 export function App() {
   const [posts, setPosts] = useState([]);
@@ -35,8 +36,11 @@ export function App() {
     // 1. Silent Live OTA Updater Initialization
     liveOtaService.init();
 
-    // 2. Request Notification Permission
+    // 2. Request Notification Permission & Initialize FCM Push Notifications
     notificationService.requestPermission();
+    fcmPushService.init((notificationData) => {
+      console.log('[App] Push Notification Tapped with Data:', notificationData);
+    });
 
     // 3. In-App APK update check
     appUpdateService.checkForUpdates().then((info) => {
