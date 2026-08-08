@@ -35,33 +35,29 @@ export const fcmPushService = {
         vibration: true
       });
 
-      // 3. Register device with FCM
-      await PushNotifications.register();
-
-      // 3. Handle Token Registration Event
+      // 3. Attach Listeners BEFORE Registering
       PushNotifications.addListener('registration', (token) => {
         console.log('[FCM] Device FCM Registration Token:', token.value);
-        // Save token to localStorage for reference
         localStorage.setItem('openfresher_fcm_token', token.value);
       });
 
-      // 4. Handle Registration Error
       PushNotifications.addListener('registrationError', (error) => {
         console.error('[FCM] Registration Error:', JSON.stringify(error));
       });
 
-      // 5. Handle Received Push Notification in Foreground
       PushNotifications.addListener('pushNotificationReceived', (notification) => {
         console.log('[FCM] Push Notification Received in Foreground:', notification);
       });
 
-      // 6. Handle Push Notification Click / Tap Event
       PushNotifications.addListener('pushNotificationActionPerformed', (action) => {
         console.log('[FCM] Notification Tapped by User:', action);
         if (onNotificationTap && action.notification?.data) {
           onNotificationTap(action.notification.data);
         }
       });
+
+      // 4. Register device with FCM
+      await PushNotifications.register();
 
       console.log('[FCM] Push Notifications Service Initialized Successfully.');
     } catch (err) {
