@@ -38,8 +38,18 @@ export function App() {
 
     // 2. Request Notification Permission & Initialize FCM Push Notifications
     notificationService.requestPermission();
-    fcmPushService.init((notificationData) => {
+    fcmPushService.init(async (notificationData) => {
       console.log('[App] Push Notification Tapped with Data:', notificationData);
+      if (!notificationData) return;
+
+      // Handle notification click: find matching job post and open modal
+      const targetQuery = notificationData.title || notificationData.postId || notificationData.url;
+      if (targetQuery) {
+        const searchResults = await bloggerApi.searchPosts(targetQuery);
+        if (searchResults && searchResults.length > 0) {
+          setSelectedPost(searchResults[0]);
+        }
+      }
     });
 
     // 3. In-App APK update check
