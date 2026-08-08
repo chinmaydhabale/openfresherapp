@@ -24,7 +24,18 @@ export const fcmPushService = {
         return;
       }
 
-      // 2. Register device with FCM
+      // 2. Create High-Priority Notification Channel for Android
+      await PushNotifications.createChannel({
+        id: 'default',
+        name: 'OpenFresher Job Alerts',
+        description: 'Instant notifications for new job hiring alerts',
+        importance: 5,
+        visibility: 1,
+        sound: 'default',
+        vibration: true
+      });
+
+      // 3. Register device with FCM
       await PushNotifications.register();
 
       // 3. Handle Token Registration Event
