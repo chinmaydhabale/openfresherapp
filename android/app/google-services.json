@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "599833787047",
+    "project_id": "openfresher-aa904",
+    "storage_bucket": "openfresher-aa904.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:599833787047:android:9a5e8f40f31dc9622b7982",
+        "android_client_info": {
+          "package_name": "com.openfresher.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVTUrS6IHcWwMQzSAhHzGPIkz_dWrVBjo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
