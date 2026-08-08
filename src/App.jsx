@@ -16,6 +16,7 @@ import { Loader2, AlertCircle, Layers } from 'lucide-react';
 import { liveOtaService } from './services/liveOtaService';
 import { notificationService } from './services/notificationService';
 import { fcmPushService } from './services/fcmPushService';
+import { firebaseAnalyticsService } from './services/firebaseAnalyticsService';
 
 export function App() {
   const [posts, setPosts] = useState([]);
@@ -36,7 +37,10 @@ export function App() {
     // 1. Silent Live OTA Updater Initialization
     liveOtaService.init();
 
-    // 2. Request Notification Permission & Initialize FCM Push Notifications
+    // 2. Initialize Firebase Analytics
+    firebaseAnalyticsService.init();
+
+    // 3. Request Notification Permission & Initialize FCM Push Notifications
     notificationService.requestPermission();
     fcmPushService.init(async (notificationData) => {
       console.log('[App] Push Notification Tapped with Data:', notificationData);
